@@ -37,7 +37,10 @@ Copyright 2011 [AppsAttic](http://www.appsattic.com/)
 
 # License
 
-MIT. See LICENSE for more details.
+MIT.
+
+See [LICENSE][license] for more details.
 
 [couponcode]: https://github.com/grantm/Algorithm-CouponCode
 [grant]: https://github.com/grantm/
+[license]: https://raw.github.com/appsattic/node-coupon-code/master/LICENSE
