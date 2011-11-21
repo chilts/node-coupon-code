@@ -1,4 +1,5 @@
-An implementation of Perl's Algorithm::CouponCode for NodeJS
+An implementation of Perl's [Algorithm::CouponCode][couponcode] for NodeJS. Thanks to [Grant][grant] for the
+inspiration. :)
 
 # Example
 
@@ -37,3 +38,6 @@ Copyright 2011 [AppsAttic](http://www.appsattic.com/)
 # License
 
 MIT. See LICENSE for more details.
+
+[couponcode] https://github.com/grantm/Algorithm-CouponCode
+[grant] https://github.com/grantm/
