@@ -39,5 +39,5 @@ Copyright 2011 [AppsAttic](http://www.appsattic.com/)
 
 MIT. See LICENSE for more details.
 
-[couponcode] https://github.com/grantm/Algorithm-CouponCode
-[grant] https://github.com/grantm/
+[couponcode]: https://github.com/grantm/Algorithm-CouponCode
+[grant]: https://github.com/grantm/
