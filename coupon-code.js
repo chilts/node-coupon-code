@@ -7,9 +7,29 @@ symbolsStr.split('').forEach(function(c) {
     i++;
 });
 
-module.exports.generate = function(parts) {
-    parts = parts || 3;
+module.exports.generate = function(opts) {
+    if ( !opts ) {
+        opts = {};
+    }
+    opts.parts = opts.parts || 3;
+    // opts.plaintext = opts.plaintext || this.plaintextRandom();
+
+    // for now, just generate a random code
+    var parts = [];
+    var data;
+    var part;
+    for( var i = 0; i < opts.parts; i++ ) {
+        data = randomSymbol() + randomSymbol() + randomSymbol();
+        part = data + checkDigitAlg1(data, i+1);
+        parts.push(part);
+    }
+
+    return parts.join('-');
 };
+
+function randomSymbol() {
+    return symbolsArr[parseInt(Math.random() * symbolsArr.length)];
+}
 
 module.exports.validate = function(opts) {
     if ( !opts ) {

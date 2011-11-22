@@ -3,7 +3,7 @@ var tap = require("tap"),
     plan = tap.plan;
 var cc = require('../coupon-code');
 
-test("some simple stuff", function (t) {
+test("Validating Various Inputs", function (t) {
     t.ok(!cc.validate(), 'missing code failed validation');
 
     t.ok( cc.validate({ code : '1K7Q-CTFM-LMTC' }), 'valid code accepted');
