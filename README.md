@@ -17,7 +17,7 @@ email address with fewer problems, typo correction and a checkdigit.
 
 # Installation
 
-The easiest way to get it is via [npm][npm]
+The easiest way to get it is via [npm][npm]:
 
 ``` bash
     $ npm install coupon-code
@@ -43,5 +43,5 @@ See [LICENSE][license] for more details.
 
 [npm]: http://npmjs.org/
 [couponcode]: https://github.com/grantm/Algorithm-CouponCode
-[grant]: https://github.com/grantm/
+[grant]: http://www.mclean.net.nz/
 [license]: https://raw.github.com/appsattic/node-coupon-code/master/LICENSE
