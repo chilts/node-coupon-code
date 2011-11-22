@@ -1,3 +1,9 @@
+// ----------------------------------------------------------------------------
+// requires
+var crypto = require('crypto');
+
+// ----------------------------------------------------------------------------
+// some constants
 var symbolsStr = '0123456789ABCDEFGHJKLMNPQRTUVWXY';
 var symbolsArr = symbolsStr.split('');
 var symbolsObj = {};
@@ -7,6 +13,8 @@ symbolsStr.split('').forEach(function(c) {
     i++;
 });
 
+// ----------------------------------------------------------------------------
+// our exported functions
 module.exports.generate = function(opts) {
     if ( !opts ) {
         opts = {};
@@ -16,6 +24,7 @@ module.exports.generate = function(opts) {
     // if we have a plaintext, generate a code from that
     if ( opts.plaintext ) {
         // not yet implemented
+        var sha1Hash = 
         return '';
     }
     else {
@@ -32,10 +41,6 @@ module.exports.generate = function(opts) {
 
     return parts.join('-');
 };
-
-function randomSymbol() {
-    return symbolsArr[parseInt(Math.random() * symbolsArr.length)];
-}
 
 module.exports.validate = function(opts) {
     if ( !opts ) {
@@ -100,6 +105,12 @@ module.exports.validate = function(opts) {
     return parts.join('-');
 };
 
+// ----------------------------------------------------------------------------
+// our internal functions
+function randomSymbol() {
+    return symbolsArr[parseInt(Math.random() * symbolsArr.length)];
+}
+
 // returns the checksum character for this (data/part) combination
 function checkDigitAlg1(data, check) {
     // check's initial value is the part number (e.g. 3 or above)
@@ -112,3 +123,5 @@ function checkDigitAlg1(data, check) {
 
     return symbolsArr[ check % 31 ];
 }
+
+// ----------------------------------------------------------------------------
