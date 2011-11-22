@@ -1,3 +1,18 @@
+// --------------------------------------------------------------------------------------------------------------------
+//
+// coupon-code.js : An implementation of Perl's Algorithm::CouponCode for NodeJS.
+//
+// Author           : Andrew Chilton
+// Web              : http://www.chilts.org/blog/
+// Email            : <chilts@appsattic.com>
+//
+// Copyright (c)    : 2011 AppsAttic Ltd
+// Web              : http://www.appsattic.com/
+// License          : http://opensource.org/licenses/MIT
+//
+// --------------------------------------------------------------------------------------------------------------------
+// constants
+
 var symbolsStr = '0123456789ABCDEFGHJKLMNPQRTUVWXY';
 var symbolsArr = symbolsStr.split('');
 var symbolsObj = {};
@@ -6,6 +21,9 @@ symbolsStr.split('').forEach(function(c) {
     symbolsObj[c] = i;
     i++;
 });
+
+// --------------------------------------------------------------------------------------------------------------------
+// exports
 
 module.exports.generate = function(opts) {
     if ( !opts ) {
@@ -32,10 +50,6 @@ module.exports.generate = function(opts) {
 
     return parts.join('-');
 };
-
-function randomSymbol() {
-    return symbolsArr[parseInt(Math.random() * symbolsArr.length)];
-}
 
 module.exports.validate = function(opts) {
     if ( !opts ) {
@@ -100,6 +114,13 @@ module.exports.validate = function(opts) {
     return parts.join('-');
 };
 
+// --------------------------------------------------------------------------------------------------------------------
+// internal helpers
+
+function randomSymbol() {
+    return symbolsArr[parseInt(Math.random() * symbolsArr.length)];
+}
+
 // returns the checksum character for this (data/part) combination
 function checkDigitAlg1(data, check) {
     // check's initial value is the part number (e.g. 3 or above)
@@ -112,3 +133,5 @@ function checkDigitAlg1(data, check) {
 
     return symbolsArr[ check % 31 ];
 }
+
+// --------------------------------------------------------------------------------------------------------------------

@@ -1,7 +1,23 @@
+// --------------------------------------------------------------------------------------------------------------------
+//
+// test/validate.js : Test the validate function.
+//
+// Author           : Andrew Chilton
+// Web              : http://www.chilts.org/blog/
+// Email            : <chilts@appsattic.com>
+//
+// Copyright (c)    : 2011 AppsAttic Ltd
+// Web              : http://www.appsattic.com/
+// License          : http://opensource.org/licenses/MIT
+//
+// --------------------------------------------------------------------------------------------------------------------
+
 var tap = require("tap"),
     test = tap.test,
     plan = tap.plan;
 var cc = require('../coupon-code');
+
+// --------------------------------------------------------------------------------------------------------------------
 
 test("Validating Various Inputs", function (t) {
     t.ok(!cc.validate(), 'missing code failed validation');
@@ -52,3 +68,5 @@ test("Validating Various Inputs", function (t) {
 
     t.end();
 });
+
+// --------------------------------------------------------------------------------------------------------------------
