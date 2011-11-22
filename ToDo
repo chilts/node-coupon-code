@@ -1,0 +1,8 @@
+* add support for transposition
+** see https://github.com/grantm/Algorithm-CouponCode/blob/master/t/04-transposition.t
+
+* add support for providing your own plaintext (e.g. an email address)
+** see https://github.com/grantm/Algorithm-CouponCode/blob/master/lib/Algorithm/CouponCode.pm#L31
+
+* add support for checking the bad word list
+** https://github.com/grantm/Algorithm-CouponCode/blob/master/lib/Algorithm/CouponCode.pm#L102
