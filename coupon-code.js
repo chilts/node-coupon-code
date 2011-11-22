@@ -13,6 +13,8 @@ symbolsStr.split('').forEach(function(c) {
     i++;
 });
 
+var symbolCount = symbolsArr.length;
+
 // ----------------------------------------------------------------------------
 // our exported functions
 module.exports.generate = function(opts) {
@@ -24,7 +26,13 @@ module.exports.generate = function(opts) {
     // if we have a plaintext, generate a code from that
     if ( opts.plaintext ) {
         // not yet implemented
-        var sha1Hash = 
+        var sha1Sum = crypto.createHash('sha1').update(opts.plaintext);
+        var sha1Hash = sha1Sum.digest('hex');
+
+        // got the sha1Hash
+        my @bytes  = map { ord($_) & [symbolCount-1] } split //, $sha1_hash;
+        my bytes = [];
+
         return '';
     }
     else {
@@ -121,7 +129,7 @@ function checkDigitAlg1(data, check) {
         check = check * 19 + k;
     });
 
-    return symbolsArr[ check % 31 ];
+    return symbolsArr[ check % (symbolCount-1) ];
 }
 
 // ----------------------------------------------------------------------------
