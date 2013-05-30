@@ -76,7 +76,8 @@ module.exports.validate = function(opts) {
         return '';
     }
 
-    var partLen = opts.partLen || 4;
+    opts.partLen = opts.partLen || 4;
+    var partLen = opts.partLen;
 
     var code = opts.code;
 
@@ -92,10 +93,10 @@ module.exports.validate = function(opts) {
     var parts = [];
     var tmp = code;
     while( tmp.length > 0 ) {
-        parts.push( tmp.substr(0, partLen+1) );
-        tmp = tmp.substr(partLen+1);
+        parts.push( tmp.substr(0, partLen) );
+        tmp = tmp.substr(partLen);
     }
-
+console.log(parts);
     // make sure we have been given the same number of parts as we are expecting
     if ( parts.length !== opts.parts ) {
         return '';
