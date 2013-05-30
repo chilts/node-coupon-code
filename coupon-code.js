@@ -26,6 +26,8 @@ symbolsStr.split('').forEach(function(c) {
 // exports
 
 module.exports.generate = function(opts) {
+    var parts;
+
     if ( !opts ) {
         opts = {};
     }
@@ -39,7 +41,7 @@ module.exports.generate = function(opts) {
     }
     else {
         // default to a random code
-        var parts = [];
+        parts = [];
         var data;
         var part;
         for( var i = 0; i < opts.parts; i++ ) {
@@ -125,7 +127,7 @@ module.exports.validate = function(opts) {
 // internal helpers
 
 function randomSymbol() {
-    return symbolsArr[parseInt(Math.random() * symbolsArr.length)];
+    return symbolsArr[parseInt(Math.random() * symbolsArr.length,10)];
 }
 
 // returns the checksum character for this (data/part) combination
