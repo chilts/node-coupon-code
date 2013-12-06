@@ -4,32 +4,46 @@
 //
 // Author           : Andrew Chilton
 // Web              : http://www.chilts.org/blog/
-// Email            : <chilts@appsattic.com>
+// Email            : <andychilton@gmail.com>
 //
-// Copyright (c)    : 2011 AppsAttic Ltd
+// Copyright (c)    : AppsAttic Ltd 2011
 // Web              : http://www.appsattic.com/
 // License          : http://opensource.org/licenses/MIT
 //
+// Copyright (c)    : Andrew Chilton 2013
+// Web              : http://chilts.org/
+// License          : http://opensource.org/licenses/MIT
+//
+// --------------------------------------------------------------------------------------------------------------------
+
+// npm
+var xtend = require('xtend');
+
 // --------------------------------------------------------------------------------------------------------------------
 // constants
 
 var symbolsStr = '0123456789ABCDEFGHJKLMNPQRTUVWXY';
 var symbolsArr = symbolsStr.split('');
 var symbolsObj = {};
-var i = 0;
-symbolsStr.split('').forEach(function(c) {
+symbolsArr.forEach(function(c, i) {
     symbolsObj[c] = i;
-    i++;
 });
+
+var defaults = {
+    parts   : 3,
+    partLen : 4,
+};
 
 // --------------------------------------------------------------------------------------------------------------------
 // exports
 
 module.exports.generate = function(opts) {
-    if ( !opts ) {
-        opts = {};
-    }
-    opts.parts = opts.parts || 3;
+    opts = xtend({}, defaults, opts);
+
+    var parts = [];
+    var part;
+    var i;
+    var j;
 
     // if we have a plaintext, generate a code from that
     if ( opts.plaintext ) {
@@ -38,12 +52,12 @@ module.exports.generate = function(opts) {
     }
     else {
         // default to a random code
-        var parts = [];
-        var data;
-        var part;
-        for( var i = 0; i < opts.parts; i++ ) {
-            data = randomSymbol() + randomSymbol() + randomSymbol();
-            part = data + checkDigitAlg1(data, i+1);
+        for( i = 0; i < opts.parts; i++ ) {
+            part = '';
+            for ( j = 0; j < opts.partLen - 1; j++ ) {
+                part += randomSymbol();
+            }
+            part = part + checkDigitAlg1(part, i+1);
             parts.push(part);
         }
     }
@@ -51,40 +65,26 @@ module.exports.generate = function(opts) {
     return parts.join('-');
 };
 
-module.exports.validate = function(opts) {
-    if ( !opts ) {
-        return '';
+module.exports.validate = function(code, opts) {
+    if ( !code ) {
+        throw new Error("Provide a code to be validated");
     }
-
-    // turn the string into a set of options
-    if ( typeof opts === 'string' ) {
-        opts = { code : opts, parts : 3 };
-    }
-
-    // default parts to 3
-    opts.parts = opts.parts || 3;
-
-    // if we have been given no code, this is not valid
-    if ( !opts.code ) {
-        return '';
-    }
-
-    var code = opts.code;
+    opts = xtend({}, defaults, opts);
 
     // uppercase the code, take out any random chars and replace OIZS with 0125
-    code = code.toUpperCase();
-    code = code.replace(/[^0-9A-Z]+/g, '');
-    code = code.replace(/O/g, '0');
-    code = code.replace(/I/g, '1');
-    code = code.replace(/Z/g, '2');
-    code = code.replace(/S/g, '5');
+    code = code.toUpperCase()
+        .replace(/[^0-9A-Z]+/g, '')
+        .replace(/O/g, '0')
+        .replace(/I/g, '1')
+        .replace(/Z/g, '2')
+        .replace(/S/g, '5');
 
     // split in the different parts
     var parts = [];
     var tmp = code;
     while( tmp.length > 0 ) {
-        parts.push( tmp.substr(0, 4) );
-        tmp = tmp.substr(4);
+        parts.push( tmp.substr(0, opts.partLen) );
+        tmp = tmp.substr(opts.partLen);
     }
 
     // make sure we have been given the same number of parts as we are expecting
@@ -97,13 +97,13 @@ module.exports.validate = function(opts) {
     for ( var i = 0; i < parts.length; i++ ) {
         part = parts[i];
         // check this part has 4 chars
-        if ( part.length !== 4 ) {
+        if ( part.length !== opts.partLen ) {
             return '';
         }
 
         // split out the data and the check
-        data = part.substr(0, 3);
-        check = part.substr(3, 1);
+        data = part.substr(0, opts.partLen-1);
+        check = part.substr(opts.partLen-1, 1);
 
         if ( check !== checkDigitAlg1(data, i+1) ) {
             return '';
@@ -118,7 +118,7 @@ module.exports.validate = function(opts) {
 // internal helpers
 
 function randomSymbol() {
-    return symbolsArr[parseInt(Math.random() * symbolsArr.length)];
+    return symbolsArr[parseInt(Math.random() * symbolsArr.length, 10)];
 }
 
 // returns the checksum character for this (data/part) combination

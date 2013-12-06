@@ -10,9 +10,11 @@
     "homepage": "https://github.com/appsattic/node-coupon-code",
     "contributors": [],
     "devDependencies": {
-        "tap": ">= 0.0.14"
+        "tape": "~2.3.0"
     },
-    "dependencies": {},
+    "dependencies": {
+        "xtend": "~2.1.1"
+    },
     "main": "coupon-code.js",
     "engines": {
         "node": "*"

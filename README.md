@@ -1,44 +1,66 @@
 An implementation of Perl's [Algorithm::CouponCode][couponcode] for NodeJS. Thanks to [Grant][grant] for the
 inspiration. :)
 
-# Usage
+# Synopsis #
 
-    var cc = require('coupon-code');
+```
+var cc = require('coupon-code');
 
-    // generate a 3 part code
-    cc.generate();
-    => '55G2-DHM0-50NN'
+// generate a 3 part code
+cc.generate();
+=> '55G2-DHM0-50NN'
 
-    // generate a 4 part code
-    cc.generate({ parts : 4 });
-    => 'U5H9-HKDH-8RNX-1EX7'
+// generate a 4 part code
+cc.generate({ parts : 4 });
+=> 'U5H9-HKDH-8RNX-1EX7'
 
-    // same code, just lowercased
-    cc.validate('55g2-dhm0-50nn');
-    => '55G2-DHM0-50NN'
+// generate a code with partLen of 6
+cc.generate({ partLen : 6 });
+=> WYLKQM-U35V40-9N84DA
+```
 
-    // various letters instead of numbers
-    cc.validate('SSGZ-DHMO-SONN');
-    => '55G2-DHM0-50NN'
+Now, when someone types their code in, you can check that it is valid. This means that letters like `O`
+are converted to `0` prior to checking.
 
-    // wrong last character
-    cc.validate('55G2-DHM0-50NK');
-    => ''
+```
+// same code, just lowercased
+cc.validate('55g2-dhm0-50nn');
+=> '55G2-DHM0-50NN'
 
-    // not enough chars in the 2nd part
-    cc.validate('55G2-DHM-50NN');
-    => ''
+// various letters instead of numbers
+cc.validate('SSGZ-DHMO-SONN');
+=> '55G2-DHM0-50NN'
 
-# Example
+// wrong last character
+cc.validate('55G2-DHM0-50NK');
+=> ''
+
+// not enough chars in the 2nd part
+cc.validate('55G2-DHM-50NN');
+=> ''
+```
+
+The first thing we do to each code is uppercase it. Then we convert the following letters to numbers:
+
+* O -> 0
+* I -> 1
+* Z -> 2
+* S -> 5
+
+This means [oizs], [OIZS] and [0125] are considered the same code.
+
+# Example #
 
 Let's say you want a user to verify they got something, whether that is an email, letter, fax or carrier pigeon. To
 prove they received it, they have to type the code you sent them into a certain page on your website. You create a code
 which they have to type in:
 
-    var cc = require('coupon-code');
+```
+var cc = require('coupon-code');
 
-    var verificationCode = cc.generate();
-    => 55G2-DHM0-50NN
+var code = cc.generate();
+=> 55G2-DHM0-50NN
+```
 
 Time passes, letters get wet, carrier pigeons go on adventures and faxes are just as bad as they ever were. Now the
 user has to type their code into your website. The problem is, they can hardly read what the code was. Luckily we're
@@ -46,7 +68,9 @@ somewhat forgiving since Z's and 2's are considered the same, O's and 0's, I's a
 to each other. But even more than that, the 4th character of each group is a checkdigit which can determine if the
 other three in that group are correct. The user types this:
 
-    [s5g2-dhmo-50nn]
+```
+[s5g2-dhmo-50nn]
+```
 
 Because our codes are case insensitive and have good conversions for similar chars, the code is accepted as correct.
 
@@ -59,20 +83,22 @@ side validation.
 The easiest way to get it is via [npm][npm]:
 
 ``` bash
-    $ npm install coupon-code
+$ npm install coupon-code
 ```
 
 # Tests
 
 To run the tests, use npm:
 
-    $ npm test
+```
+$ npm test
+```
 
 # Author
 
-Written by [Andrew Chilton](http://www.chilts.org/blog/)
-
-Copyright 2011 [AppsAttic](http://www.appsattic.com/)
+* Written by [Andrew Chilton](http://chilts.org/blog/)
+* Copyright 2011 [AppsAttic](http://appsattic.com/)
+* Copyright 2013 [Andrew Chilton](http://chilts.org/)
 
 # Inspired By
 
