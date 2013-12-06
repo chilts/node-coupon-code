@@ -26,10 +26,13 @@ symbolsStr.split('').forEach(function(c) {
 // exports
 
 module.exports.generate = function(opts) {
+    var parts;
+
     if ( !opts ) {
         opts = {};
     }
     opts.parts = opts.parts || 3;
+    opts.partLen = opts.partLen || 4; //includes checkdigit
 
     // if we have a plaintext, generate a code from that
     if ( opts.plaintext ) {
@@ -38,11 +41,15 @@ module.exports.generate = function(opts) {
     }
     else {
         // default to a random code
-        var parts = [];
+        parts = [];
         var data;
         var part;
         for( var i = 0; i < opts.parts; i++ ) {
-            data = randomSymbol() + randomSymbol() + randomSymbol();
+            data = '';
+            for (var j=0;j<opts.partLen-1;j++) {
+                data += randomSymbol();
+            }
+            //data = randomSymbol() + randomSymbol() + randomSymbol() + randomSymbol();
             part = data + checkDigitAlg1(data, i+1);
             parts.push(part);
         }
@@ -69,6 +76,9 @@ module.exports.validate = function(opts) {
         return '';
     }
 
+    opts.partLen = opts.partLen || 4;
+    var partLen = opts.partLen;
+
     var code = opts.code;
 
     // uppercase the code, take out any random chars and replace OIZS with 0125
@@ -83,10 +93,10 @@ module.exports.validate = function(opts) {
     var parts = [];
     var tmp = code;
     while( tmp.length > 0 ) {
-        parts.push( tmp.substr(0, 4) );
-        tmp = tmp.substr(4);
+        parts.push( tmp.substr(0, partLen) );
+        tmp = tmp.substr(partLen);
     }
-
+console.log(parts);
     // make sure we have been given the same number of parts as we are expecting
     if ( parts.length !== opts.parts ) {
         return '';
@@ -96,14 +106,14 @@ module.exports.validate = function(opts) {
     var part, str, check;
     for ( var i = 0; i < parts.length; i++ ) {
         part = parts[i];
-        // check this part has 4 chars
-        if ( part.length !== 4 ) {
+        // check this part has X chars
+        if ( part.length !== partLen ) {
             return '';
         }
 
         // split out the data and the check
-        data = part.substr(0, 3);
-        check = part.substr(3, 1);
+        data = part.substr(0, partLen-1);
+        check = part.substr(partLen-1, 1);
 
         if ( check !== checkDigitAlg1(data, i+1) ) {
             return '';
@@ -118,7 +128,7 @@ module.exports.validate = function(opts) {
 // internal helpers
 
 function randomSymbol() {
-    return symbolsArr[parseInt(Math.random() * symbolsArr.length)];
+    return symbolsArr[parseInt(Math.random() * symbolsArr.length,10)];
 }
 
 // returns the checksum character for this (data/part) combination
