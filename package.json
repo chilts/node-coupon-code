@@ -35,6 +35,6 @@
         "code", "token", "validation token", "verification token", "coupon code"
     ],
     "scripts" : {
-        "test" : "tap test/*.js"
+        "test" : "set -e; for FILE in test/*.js; do node $FILE; done"
     }
 }
