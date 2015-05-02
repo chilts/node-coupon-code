@@ -21,7 +21,10 @@ var xtend = require('xtend');
 
 // --------------------------------------------------------------------------------------------------------------------
 // constants
-
+var badWordsList = ('SHPX PHAG JNAX JNAT CVFF PBPX FUVG GJNG GVGF SNEG URYY ZHSS QVPX XABO ' +
+                   'NEFR FUNT GBFF FYHG GHEQ FYNT PENC CBBC OHGG SRPX OBBO WVFZ WVMM CUNG')
+                   .replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);})
+                   .split(' ');
 var symbolsStr = '0123456789ABCDEFGHJKLMNPQRTUVWXY';
 var symbolsArr = symbolsStr.split('');
 var symbolsObj = {};
@@ -52,17 +55,30 @@ module.exports.generate = function(opts) {
     }
     else {
         // default to a random code
-        for( i = 0; i < opts.parts; i++ ) {
-            part = '';
-            for ( j = 0; j < opts.partLen - 1; j++ ) {
-                part += randomSymbol();
+        do {
+            parts.length = 0;
+            for( i = 0; i < opts.parts; i++ ) {
+                part = '';
+                for ( j = 0; j < opts.partLen - 1; j++ ) {
+                    part += randomSymbol();
+                }
+                part = part + checkDigitAlg1(part, i+1);
+                parts.push(part);
             }
-            part = part + checkDigitAlg1(part, i+1);
-            parts.push(part);
-        }
+        } while (!exports.checkForBadWords(parts.join('')))
     }
 
     return parts.join('-');
+};
+
+module.exports.checkForBadWords = function(code) {
+    var i;
+    code = code.toUpperCase();
+    for( i = 0; i < badWordsList.length; i++ ) {
+        if (code.indexOf(badWordsList[i]) > -1)
+            return true;
+    }
+    return false;
 };
 
 module.exports.validate = function(code, opts) {
