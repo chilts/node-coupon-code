@@ -4,10 +4,10 @@
     "version": "0.4.0",
     "author": {
         "name":"Andrew Chilton",
-        "email":"chilts@appsattic.com",
-        "url":"http://www.chilts.org/"
+        "email":"andychilton@gmail.com",
+        "url":"http://chilts.org/"
     },
-    "homepage": "https://github.com/appsattic/node-coupon-code",
+    "homepage": "https://github.com/chilts/node-coupon-code",
     "contributors": [],
     "devDependencies": {
         "tape": "~4.0.0"
@@ -21,15 +21,15 @@
     },
     "repository": {
         "type" : "git",
-        "url": "git://github.com/appsattic/node-coupon-code.git"
+        "url": "git://github.com/chilts/node-coupon-code.git"
     },
    "bugs" : {
-        "url" : "http://github.com/appsattic/node-coupon-code/issues",
-        "mail" : "chilts@appsattic.com"
+        "url" : "http://github.com/chilts/node-coupon-code/issues",
+        "mail" : "andychilton@gmail.com"
     },
     "licenses": [{
         "type": "MIT",
-        "url": "https://raw.github.com/appsattic/node-coupon-code/master/LICENSE"
+        "url": "https://raw.github.com/chilts/node-coupon-code/master/LICENSE"
     }],
     "keywords": [
         "code", "token", "validation token", "verification token", "coupon code"
