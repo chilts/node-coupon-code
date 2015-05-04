@@ -1,7 +1,7 @@
 {
     "name": "coupon-code",
     "description": "An implementation of Perl's Algorithm::CouponCode for NodeJS.",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "author": {
         "name":"Andrew Chilton",
         "email":"andychilton@gmail.com",
