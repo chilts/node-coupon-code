@@ -65,20 +65,10 @@ module.exports.generate = function(opts) {
                 part = part + checkDigitAlg1(part, i+1);
                 parts.push(part);
             }
-        } while (!exports.checkForBadWords(parts.join('')))
+        } while (hasBadWord(parts.join('')))
     }
 
     return parts.join('-');
-};
-
-module.exports.checkForBadWords = function(code) {
-    var i;
-    code = code.toUpperCase();
-    for( i = 0; i < badWordsList.length; i++ ) {
-        if (code.indexOf(badWordsList[i]) > -1)
-            return true;
-    }
-    return false;
 };
 
 module.exports.validate = function(code, opts) {
@@ -149,5 +139,18 @@ function checkDigitAlg1(data, check) {
 
     return symbolsArr[ check % 31 ];
 }
+
+function hasBadWord(code) {
+    var i;
+    code = code.toUpperCase();
+    for( i = 0; i < badWordsList.length; i++ ) {
+        if (code.indexOf(badWordsList[i]) > -1)
+            return true;
+    }
+    return false;
+};
+
+// also export this (for testing)
+module.exports.hasBadWord = hasBadWord
 
 // --------------------------------------------------------------------------------------------------------------------

@@ -26,15 +26,15 @@ var badWordsList = ('SHPX PHAG JNAX JNAT CVFF PBPX FUVG GJNG GVGF SNEG URYY ZHSS
 
 test("Checking that bad words can be found", function (t) {
     var i;
-    // check each rude word is locatable in the string
+    // check each rude word not locatable in the string
     for( i = 0; i < badWordsList.length; i++ ) {
-        t.ok( cc.checkForBadWords(badWordsList[i] + 'YYYYZZZZ'), 'Bad word found at start of code');
-        t.ok( cc.checkForBadWords('XXXX' + badWordsList[i] + 'ZZZZ'), 'Bad word found in middle of code');
-        t.ok( cc.checkForBadWords('YYYYZZZZ' + badWordsList[i]), 'Bad word found at end of code');
+        t.ok( cc.hasBadWord(badWordsList[i] + 'YYYYZZZZ'), 'Bad word found at start of code');
+        t.ok( cc.hasBadWord('XXXX' + badWordsList[i] + 'ZZZZ'), 'Bad word found in middle of code');
+        t.ok( cc.hasBadWord('YYYYZZZZ' + badWordsList[i]), 'Bad word found at end of code');
     }
 
-    t.ok(cc.checkForBadWords('XXXX' + badWordsList[0].toLowerCase() + 'YYYYZZZZ'), 'Lower case bad word found in code');
-    t.ok(!cc.checkForBadWords('XXXXYYYYZZZZ'), 'No bad words found in code');
+    t.ok(cc.hasBadWord('XXXX' + badWordsList[0].toLowerCase() + 'YYYYZZZZ'), 'Lower case bad word found in code');
+    t.ok(!cc.hasBadWord('XXXXYYYYZZZZ'), 'No bad words found in code');
 
     t.end();
 });
