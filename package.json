@@ -27,10 +27,7 @@
         "url" : "http://github.com/chilts/node-coupon-code/issues",
         "mail" : "andychilton@gmail.com"
     },
-    "licenses": [{
-        "type": "MIT",
-        "url": "https://raw.github.com/chilts/node-coupon-code/master/LICENSE"
-    }],
+    "license": "MIT",
     "keywords": [
         "code", "token", "validation token", "verification token", "coupon code"
     ],
