@@ -1,6 +1,9 @@
 An implementation of Perl's [Algorithm::CouponCode][couponcode] for NodeJS. Thanks to [Grant][grant] for the
 inspiration. :)
 
+Note: this package is considered stable, hence it seems not much is happening, however all bugs get fixed
+and currently no new features are planned. It is done.
+
 # Synopsis #
 
 ```
@@ -38,6 +41,14 @@ cc.validate('55G2-DHM0-50NK');
 // not enough chars in the 2nd part
 cc.validate('55G2-DHM-50NN');
 => ''
+
+// validate a code with 4 parts
+cc.validate('U5H9-HKDH-8RNX-1EX7', { parts : 4 });
+=> U5H9-HKDH-8RNX-1EX7
+
+// validate a code with partLen of 6
+cc.validate('WYLKQM-U35V40-9N84DA', { partLen : 6 });
+=> WYLKQM-U35V40-9N84DA
 ```
 
 The first thing we do to each code is uppercase it. Then we convert the following letters to numbers:
