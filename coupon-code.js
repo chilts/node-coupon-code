@@ -99,7 +99,7 @@ module.exports.validate = function(code, opts) {
     }
 
     // validate each part
-    var part, str, check;
+    var part, str, check, data;
     for ( var i = 0; i < parts.length; i++ ) {
         part = parts[i];
         // check this part has 4 chars
