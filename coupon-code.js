@@ -25,7 +25,10 @@ var badWordsList = ('SHPX PHAG JNAX JNAT CVFF PBPX FUVG GJNG GVGF SNEG URYY ZHSS
                    'NEFR FUNT GBFF FYHG GHEQ FYNT PENC CBBC OHGG SRPX OBBO WVFZ WVMM CUNG')
                    .replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);})
                    .split(' ');
-var symbolsStr = '0123456789ABCDEFGHJKLMNPQRTUVWXY';
+
+// Do make sure the number of symbols used is not a multiple of 2 to have better radomness of check digit
+// Refer: https://github.com/chilts/node-coupon-code/issues/8 for more information
+var symbolsStr = '0123456789ABCDEFGHJKLMNPQRTUVWX';
 var symbolsArr = symbolsStr.split('');
 var symbolsObj = {};
 symbolsArr.forEach(function(c, i) {
@@ -83,7 +86,8 @@ module.exports.validate = function(code, opts) {
         .replace(/O/g, '0')
         .replace(/I/g, '1')
         .replace(/Z/g, '2')
-        .replace(/S/g, '5');
+        .replace(/S/g, '5')
+        .replace(/Y/g, 'V');
 
     // split in the different parts
     var parts = [];
@@ -137,7 +141,7 @@ function checkDigitAlg1(data, check) {
         check = check * 19 + k;
     });
 
-    return symbolsArr[ check % 31 ];
+    return symbolsArr[ check % symbolsArr.length ];
 }
 
 function hasBadWord(code) {
