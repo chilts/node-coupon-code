@@ -69,7 +69,7 @@ test("Validating Various Inputs", function (t) {
     t.ok(!cc.validate('7YQN-1FU7-E1HX-0BGP', { parts : 4 }), 'invalid checkdigit rejected in part 4');
 
     t.ok( cc.validate('YENK-UPJK-PTE0-20U6-QYMK', { parts : 5 }), 'valid code-pretest');
-    t.ok(!cc.validate('YENK-UPJK-PTE0-20U6-QYMK', { parts : 5 }), 'invalid checkdigit rejected in part 5');
+    t.ok(!cc.validate('YENK-UPJK-PTE0-20U6-QYMT', { parts : 5 }), 'invalid checkdigit rejected in part 5');
 
     t.ok( cc.validate('YENK-UPJK-PTE0-20U6-QYMK-RBK1', { parts : 6 }), 'valid code-pretest');
     t.ok(!cc.validate('YENK-UPJK-PTE0-20U6-QYMK-RBK2', { parts : 6 }), 'invalid checkdigit rejected in part 6');
